@@ -1,5 +1,11 @@
 # README
+## Demo
+- Setup Rails 5.1 with Redux
+- Extend API with new endpoint
+- Add new redux elements
+- Further readings
 
+## Setup
 ``` bash
 rvm use 2.4.1@ToDoRails51ReactV1
 git init
@@ -18,6 +24,10 @@ In `config/environments/development.rb` add webpack dev server config:
 ```
 config.x.webpacker[:dev_server_host] = "http://localhost:8080"
 ```
+## Add a new endpoint to API
+
+##
+
 
 # Useful Links:
 
