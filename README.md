@@ -19,10 +19,9 @@ In `config/environments/development.rb` add webpack dev server config:
 config.x.webpacker[:dev_server_host] = "http://localhost:8080"
 ```
 
-Useful Links:
+#Useful Links:
 
-Rails 5.1:
+##Rails 5.1:
 
-
-Redux:
+##Redux:
 https://www.smashingmagazine.com/2016/06/an-introduction-to-redux/
