@@ -84,6 +84,438 @@ Route to the ToDos controller by default by adding the default route to `config/
 root to: 'todos#index'
 ```
 
+## React and Redux client-side code
+
+Create Redux actions in `app/javascript/actions/todos.js` with
+
+``` js
+let nextTodoId = 0
+const addTodo = (text) => ({
+  type: 'ADD_TODO',
+  id: nextTodoId++,
+  text
+})
+
+const setVisibilityFilter = (filter) => ({
+  type: 'SET_VISIBILITY_FILTER',
+  filter
+})
+
+const toggleTodo = (id) => ({
+  type: 'TOGGLE_TODO',
+  id
+})
+
+module.exports = {
+ addTodo: addTodo,
+  setVisibilityFilter: setVisibilityFilter,
+ toggleTodo: toggleTodo
+}
+```
+
+Create a Link component in `app/javascript/components/Link.js` with
+
+``` js
+import React, { PropTypes } from 'react'
+
+const Link = ({ active, children, onClick }) => {
+  if (active) {
+    return <span>{children}</span>
+  }
+
+  return (
+    <a href="#"
+       onClick={e => {
+         e.preventDefault()
+         onClick()
+       }}
+    >
+      {children}
+    </a>
+  )
+}
+
+Link.propTypes = {
+  active: PropTypes.bool.isRequired,
+  children: PropTypes.node.isRequired,
+  onClick: PropTypes.func.isRequired
+}
+
+export default Link
+```
+
+Create Undo/Redo button components in `app/javascript/components/UndoRedoButtons.js` with
+
+``` js
+import React from 'react';
+
+const UndoRedoButtons = ({ canUndo, canRedo, onUndo, onRedo }) => (
+  <p>
+    <button onClick={onUndo} disabled={!canUndo}>
+      Undo
+    </button>
+    <button onClick={onRedo} disabled={!canRedo}>
+      Redo
+    </button>
+  </p>
+)
+
+export default UndoRedoButtons;
+```
+
+Create an Add ToDo form in `app/javascript/components/todos/AddTodoForm.js` with
+
+``` js
+import React, { PropTypes } from 'react'
+
+const onSubmit = (event, input, action) => {
+  event.preventDefault()
+  if (!input.value.trim()) {
+    return
+  }
+  action(input.value);
+  input.value = ''
+}
+
+const AddTodoForm = ({ addTodo }) => {
+  let input;
+  return(
+  <div>
+    <form onSubmit={event => onSubmit(event, input, addTodo)}>
+      <input ref={node => {input = node}} />
+      <button type="submit">
+        Add Todo
+      </button>
+    </form>
+  </div>
+  );
+}
+
+AddTodoForm.propTypes = {
+  addTodo: PropTypes.func.isRequired
+}
+
+export default AddTodoForm
+```
+
+Create a ToDo item component in `app/javascript/components/todos/Todo.js` with
+
+``` js
+import React, { PropTypes } from 'react'
+
+const Todo = ({ onClick, completed, text }) => (
+  <li
+    onClick={onClick}
+    style={{
+      textDecoration: completed ? 'line-through' : 'none'
+    }}
+  >
+    {text}
+  </li>
+)
+
+Todo.propTypes = {
+  onClick: PropTypes.func.isRequired,
+  completed: PropTypes.bool.isRequired,
+  text: PropTypes.string.isRequired
+}
+
+export default Todo;
+```
+
+Create a filters component using the Link component in `app/javascript/components/todos/TodoFilters.js` with
+
+``` js
+import React from 'react'
+import FilterLink from '../../containers/todos/FilterLinkContainer'
+
+const TodoFilters = () => (
+  <p>
+    {"Filter: "}
+    <FilterLink filter="SHOW_ALL">
+      All
+    </FilterLink>
+    {" | "}
+    <FilterLink filter="SHOW_ACTIVE">
+      Active
+    </FilterLink>
+    {" | "}
+    <FilterLink filter="SHOW_COMPLETED">
+      Completed
+    </FilterLink>
+  </p>
+)
+
+export default TodoFilters;
+```
+
+Create a ToDo list component made of ToDos in `app/javascript/components/todos/TodoList.js` with
+``` js
+import React, { PropTypes } from 'react'
+import Todo from './Todo'
+
+const TodoList = ({ todos, onTodoClick }) => (
+  <ul>
+    {todos.map(todo =>
+      <Todo
+        key={todo.id}
+        {...todo}
+        onClick={() => onTodoClick(todo.id)}
+      />
+    )}
+  </ul>
+)
+
+TodoList.propTypes = {
+  todos: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      completed: PropTypes.bool.isRequired,
+      text: PropTypes.string.isRequired
+    }).isRequired
+  ).isRequired,
+  onTodoClick: PropTypes.func.isRequired
+}
+
+export default TodoList;
+```
+
+Create a ToDo screen container in `app/javascript/components/todos/TodoScreen.js` with
+
+``` js
+import React from 'react'
+import TodoFilters from './TodoFilters'
+import AddTodoForm from '../../containers/todos/AddTodoFormContainer'
+import VisibleTodoList from '../../containers/todos/VisibleTodoList'
+import UndoRedo from '../../containers/UndoRedo'
+
+const TodoScreen = () => (
+  <div>
+    <AddTodoForm />
+    <VisibleTodoList />
+    <TodoFilters />
+    <UndoRedo />
+  </div>
+)
+
+export default TodoScreen
+```
+
+Create a Undo/Redo container in `app/javascript/containers/UndoRedo.js` with
+
+``` js
+import { ActionCreators as UndoActionCreators } from 'redux-undo'
+import { connect } from 'react-redux'
+import UndoRedoButtons from '../components/UndoRedoButtons'
+
+const mapStateToProps = (state) => ({
+  canUndo: state.todos.past.length > 0,
+  canRedo: state.todos.future.length > 0
+})
+
+const mapDispatchToProps = ({
+  onUndo: UndoActionCreators.undo,
+  onRedo: UndoActionCreators.redo
+})
+
+const UndoRedo = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(UndoRedoButtons)
+
+export default UndoRedo
+```
+
+Create an add ToDo form container in `app/javascript/containers/todos/AddTodoFormContainer.js` with
+
+``` js
+import { connect } from 'react-redux';
+import AddTodoForm from '../../components/todos/AddTodoForm'
+import actions from '../../actions/todos';
+
+export const mapDispatchToProps = (dispatch) => ({
+  addTodo: (value) => dispatch(actions.addTodo(value))
+})
+
+const AddTodoFormContainer = connect(null, mapDispatchToProps)(AddTodoForm)
+
+export default AddTodoFormContainer
+```
+
+Create a filter link container in `app/javascript/containers/todos/FilterLinkContainer.js` with
+
+``` js
+import { connect } from 'react-redux'
+import { setVisibilityFilter } from '../../actions/todos'
+import Link from '../../components/Link'
+
+const mapStateToProps = (state, ownProps) => ({
+  active: ownProps.filter === state.visibilityFilter
+})
+
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  onClick: () => {
+    dispatch(setVisibilityFilter(ownProps.filter))
+  }
+})
+
+const FilterLink = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Link)
+
+export default FilterLink
+```
+
+Create a visible ToDo list container in `app/javascript/containers/todos/VisibleTodoList.js` with
+
+``` js
+// Container components connect the presentational components to Redux
+
+import { connect } from 'react-redux'
+import { toggleTodo } from '../../actions/todos'
+import TodoList from '../../components/todos/TodoList'
+
+// returns an array of todos for the corresponding filter
+const getVisibleTodos = (todos, filter) => {
+  switch (filter) {
+    case 'SHOW_ALL':
+      return todos
+    case 'SHOW_COMPLETED':
+      return todos.filter(t => t.completed)
+    case 'SHOW_ACTIVE':
+      return todos.filter(t => !t.completed)
+    default:
+      throw new Error('Unknown filter: ' + filter)
+  }
+}
+
+// mapStateToProps defines how to transform the current Redux store
+// state into the props you want to pass to the presentational component
+const mapStateToProps = (state) => ({
+  todos: getVisibleTodos(state.todos.present, state.visibilityFilter)
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  onTodoClick: (id) => {
+    dispatch(toggleTodo(id))
+  }
+})
+
+// A container component is just a React component that uses store.subscribe()
+// to read a part of the Redux state tree and supply props to a
+// presentational component it renders
+const VisibleTodoList = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(TodoList)
+// Note that TodoList component takes two props:
+// The todos array and the onClick function
+
+export default VisibleTodoList
+```
+
+Create the ToDo pack in `app/javascript/packs/todos.js`
+
+``` js
+import React from 'react'
+import { render } from 'react-dom'
+import { createStore } from 'redux';
+import reducer from '../reducers';
+import { Provider } from 'react-redux';
+import TodoScreen from '../components/todos/TodoScreen';
+
+const store = createStore(reducer)
+
+document.addEventListener("DOMContentLoaded", e => {
+  render((
+    <Provider store={store}>
+      <TodoScreen />
+    </Provider>
+    ),
+    document.getElementById('todos')
+  )
+})
+```
+
+Create the main reducer in `app/javascript/reducers/index.js` with
+
+``` js
+import { combineReducers } from 'redux'
+import todos from './todos'
+import visibilityFilter from './visibilityFilter'
+
+const todoApp = combineReducers({
+  todos,
+  visibilityFilter
+})
+
+export default todoApp
+```
+
+Create the ToDos reducer in `app/javascript/reducers/todos.js` with
+
+``` js
+import undoable, { distinctState } from 'redux-undo'
+
+export const todo = (state, action) => {
+  switch (action.type) {
+    case 'ADD_TODO':
+      return {
+        id: action.id,
+        text: action.text,
+        completed: false
+      }
+    case 'TOGGLE_TODO':
+      if (state.id !== action.id) {
+        return state
+      }
+
+      return {
+        ...state,
+        completed: !state.completed
+      }
+    default:
+      return state
+  }
+}
+
+export const todos = (state = [], action) => {
+  switch (action.type) {
+    case 'ADD_TODO':
+      return [
+        ...state,
+        todo(undefined, action)
+      ]
+    case 'TOGGLE_TODO':
+      return state.map(t => todo(t, action))
+    default:
+      return state
+  }
+}
+
+const undoableTodos = undoable(todos, {
+  filter: distinctState()
+})
+
+export default undoableTodos
+```
+
+Create the visibility reducer in `app/javascript/reducers/visibilityFilter.js` with
+
+``` js
+const visibilityFilter = (state = 'SHOW_ALL', action) => {
+  switch (action.type) {
+    case 'SET_VISIBILITY_FILTER':
+      return action.filter
+    default:
+      return state
+  }
+}
+
+export default visibilityFilter
+```
+
 # TODO
 
 - [ ] Finish initial app set up
