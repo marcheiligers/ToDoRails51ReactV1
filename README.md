@@ -516,6 +516,8 @@ const visibilityFilter = (state = 'SHOW_ALL', action) => {
 export default visibilityFilter
 ```
 
+NOTE: I skipped testing. Have a look at [this commit](https://github.com/paulsturgess/todos-5.1.0/commit/979af2ac4a762bd3eb712a1dc6d602a811417c8d) to see how tests were implemented for all this React and Redux code.
+
 # TODO
 
 - [ ] Finish initial app set up
