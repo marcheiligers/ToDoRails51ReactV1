@@ -7,6 +7,10 @@
 - Add new redux elements
 - Further readings
 
+## Requirements
+
+- Ensure you have yarn > 0.20.0
+
 ## Setup
 
 ``` bash
@@ -53,6 +57,31 @@ You can now start the application with
 
 ``` bash
 foreman start
+```
+
+## Rails application code
+
+Create the ToDos controller `app/controllers/todos_controller.rb` with
+
+``` ruby
+class TodosController < ApplicationController
+  def index
+  end
+end
+```
+
+Create the ToDos view `app/views/todos/index.html.erb` with
+
+``` erb
+<h1>Todos</h1>
+
+<div id='todos'></div>
+```
+
+Route to the ToDos controller by default by adding the default route to `config/routes.rb`
+
+``` ruby
+root to: 'todos#index'
 ```
 
 # TODO
