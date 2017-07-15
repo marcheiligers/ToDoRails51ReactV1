@@ -27,6 +27,21 @@ In `config/environments/development.rb` add webpack dev server config:
 config.x.webpacker[:dev_server_host] = "http://localhost:8080"
 ```
 
+In `package.json` add the test script and configuration
+
+``` json
+  "scripts": {
+    "test": "NODE_PATH='./node_modules:../app/javascript' jest --coverage"
+  },
+  "jest": {
+    "roots": [
+      "app/javascript"
+    ]
+  },
+```
+
+Add `/coverage` to `.gitignore`
+
 # TODO
 
 - [ ] Finish initial app set up

@@ -1,6 +1,14 @@
 {
   "name": "todos",
   "private": true,
+  "scripts": {
+    "test": "NODE_PATH='./node_modules:../app/javascript' jest --coverage"
+  },
+  "jest": {
+    "roots": [
+      "app/javascript"
+    ]
+  },
   "dependencies": {
     "react-redux": "^5.0.5",
     "redux": "^3.7.2",
