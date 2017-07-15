@@ -2,7 +2,7 @@
   "name": "todos",
   "private": true,
   "scripts": {
-    "test": "NODE_PATH='./node_modules:../app/javascript' jest --coverage"
+    "test": "NODE_PATH='./node_modules:../app/javascript' jest --watch --coverage"
   },
   "jest": {
     "roots": [
@@ -16,6 +16,7 @@
   },
   "devDependencies": {
     "babel-preset-stage-2": "^6.24.1",
+    "enzyme": "^2.9.1",
     "jest": "^20.0.4",
     "react-addons-test-utils": "^15.6.0",
     "redux-mock-store": "^1.2.3"

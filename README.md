@@ -15,7 +15,7 @@ gem install bundler
 gem install rails -v='5.1.2'
 rails new todos --webpack=react
 cd todos
-yarn add --dev jest babel-preset-stage-2 react-addons-test-utils redux-mock-store
+yarn add --dev jest babel-preset-stage-2 react-addons-test-utils redux-mock-store enzyme
 echo "{\n  \"presets\": [\"es2015\", \"react\", \"stage-2\"]\n}\n" > .babelrc
 yarn add react-redux redux-undo redux
 echo "rails: bin/rails s\nwebpack: ./bin/webpack-dev-server" > Procfile
@@ -31,7 +31,7 @@ In `package.json` add the test script and configuration
 
 ``` json
   "scripts": {
-    "test": "NODE_PATH='./node_modules:../app/javascript' jest --coverage"
+    "test": "NODE_PATH='./node_modules:../app/javascript' jest --watch --coverage"
   },
   "jest": {
     "roots": [
