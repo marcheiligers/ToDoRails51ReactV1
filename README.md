@@ -1,5 +1,7 @@
 # README
+
 ## Demo
+
 - Setup Rails 5.1 with Redux
 - Extend API with new endpoint
 - Add new redux elements
@@ -24,14 +26,20 @@ In `config/environments/development.rb` add webpack dev server config:
 ```
 config.x.webpacker[:dev_server_host] = "http://localhost:8080"
 ```
-## Add a new endpoint to API
 
-##
+# TODO
 
+- [ ] Finish initial app set up
+- [ ] Add a ToDo model
+- [ ] Add a ToDo controller
+- [ ] Update client to load and save data
+- [ ] Add more links
 
 # Useful Links:
 
 ## Rails 5.1:
 
 ## Redux:
-https://www.smashingmagazine.com/2016/06/an-introduction-to-redux/
+
+[A cartoon intro to redux](https://code-cartoons.com/a-cartoon-intro-to-redux-3afb775501a6)
+[An introduction to redux](https://www.smashingmagazine.com/2016/06/an-introduction-to-redux/)
