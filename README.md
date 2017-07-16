@@ -545,7 +545,13 @@ Add the package to the view.
 
 # Useful Links:
 
+- [Original project: Paul Sturgess Todos 5.1.0](https://github.com/paulsturgess/todos-5.1.0)
+
 ## Rails 5.1:
+
+- [Rails 5.1: Loving JavaScript, System Tests, Encrypted Secrets, and more](http://weblog.rubyonrails.org/2017/4/27/Rails-5-1-final/)
+- [Rails 5.1 Loves JavaScript](https://medium.com/@hpux/rails-5-1-loves-javascript-a1d84d5318b)
+- [Introducing Webpacker](https://medium.com/statuscode/introducing-webpacker-7136d66cddfb)
 
 ## Redux:
 
