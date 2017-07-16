@@ -22,7 +22,7 @@ rails new todos --webpack=react
 cd todos
 yarn add --dev jest enzyme babel-preset-stage-2 react-addons-test-utils redux-mock-store
 echo "{\n  \"presets\": [\"es2015\", \"react\", \"stage-2\"]\n}\n" > .babelrc
-yarn add react-redux redux-undo redux
+yarn add react react-dom babel-preset-react babel-preset-es2015 react-redux redux-undo redux
 echo "rails: bin/rails s\nwebpack: ./bin/webpack-dev-server" > Procfile
 ```
 
@@ -518,14 +518,22 @@ export default visibilityFilter
 
 NOTE: I skipped testing. Have a look at [this commit](https://github.com/paulsturgess/todos-5.1.0/commit/979af2ac4a762bd3eb712a1dc6d602a811417c8d) to see how tests were implemented for all this React and Redux code.
 
+## Hooking it all up
+
+Add the package to the view.
+
+``` erb
+<%= javascript_pack_tag 'todos' %>
+```
+
 # TODO
 
-- [ ] Finish initial app set up
+- [x] Finish initial app set up
 - [ ] Add a ToDo model
 - [ ] Add a ToDo controller
 - [ ] Update client to load and save data
 - [ ] Add more links
-- [ ] Figure out why there was no .babelrc or webpack scripts in bin/
+- [ ] Figure out why there was no .babelrc or webpack scripts in bin/, or indeed react, react-dom, and so on
 
 # Useful Links:
 
