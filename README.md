@@ -549,5 +549,5 @@ Add the package to the view.
 
 ## Redux:
 
-[A cartoon intro to redux](https://code-cartoons.com/a-cartoon-intro-to-redux-3afb775501a6)
-[An introduction to redux](https://www.smashingmagazine.com/2016/06/an-introduction-to-redux/)
+- [A cartoon intro to redux](https://code-cartoons.com/a-cartoon-intro-to-redux-3afb775501a6)
+- [An introduction to redux](https://www.smashingmagazine.com/2016/06/an-introduction-to-redux/)
