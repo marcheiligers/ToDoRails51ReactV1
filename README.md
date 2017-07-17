@@ -540,8 +540,8 @@ Add the package to the view.
 - [ ] Add a Todo model
 - [ ] Add a Todo controller
 - [ ] Update client to load and save data
-- [ ] Add more links
-- [ ] Figure out why there was no .babelrc or webpack scripts in bin/, or indeed react, react-dom, and so on
+- [x] Add more links
+- [x] Figure out why there was no .babelrc or webpack scripts in bin/, or indeed react, react-dom, and so on
 
 # Useful Links:
 
