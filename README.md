@@ -14,15 +14,13 @@
 ## Setup
 
 ``` bash
-rvm use 2.4.1@TodoRails51ReactV1
-git init
-gem install bundler
-gem install rails -v='5.1.2'
+rvm use --create --ruby-version 2.4.1@TodoRails51React
+gem install bundler --no-ri --no-rdoc
+gem install rails -v='5.1.2' --no-ri --no-rdoc
 rails new todos --webpack=react
 cd todos
-yarn add --dev jest enzyme babel-preset-stage-2 react-addons-test-utils redux-mock-store
-echo "{\n  \"presets\": [\"es2015\", \"react\", \"stage-2\"]\n}\n" > .babelrc
-yarn add react react-dom babel-preset-react babel-preset-es2015 react-redux redux-undo redux
+yarn add --dev babel-preset-stage-2 jest enzyme react-addons-test-utils redux-mock-store
+yarn add babel-preset-es2015 react-redux redux-undo redux
 echo "rails: bin/rails s\nwebpack: ./bin/webpack-dev-server" > Procfile
 ```
 
@@ -30,6 +28,14 @@ In `config/environments/development.rb` add webpack dev server config:
 
 ```
 config.x.webpacker[:dev_server_host] = "http://localhost:8080"
+```
+
+Add the presets to `babel.js`
+
+```
+  query: {
+    presets: ['react', 'es2015', 'stage-2']
+  }
 ```
 
 Add `gem 'forman'` to the `:development` group in the `Gemfile` and
