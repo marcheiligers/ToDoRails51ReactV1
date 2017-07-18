@@ -22,7 +22,7 @@ yarn --version #check version to make sure installed and in path
 ## Setup
 
 ``` bash
-rvm use 2.4.1@TodoRails51ReactV1
+rvm use 2.4.1@TodoRails51ReactV1 #--create
 git init
 gem install bundler
 gem install rails -v='5.1.2'
