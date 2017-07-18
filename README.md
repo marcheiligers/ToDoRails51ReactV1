@@ -38,7 +38,7 @@ In `config/environments/development.rb` add webpack dev server config:
 config.x.webpacker[:dev_server_host] = "http://localhost:8080"
 ```
 
-Add the presets to `babel.js`
+Add the presets to `babel.js` and the `react.js`
 
 ```
   query: {
