@@ -539,7 +539,31 @@ Add the package to the view.
 ``` erb
 <%= javascript_pack_tag 'todos' %>
 ```
+## Add some style
+- Add your style file `style.scss` under the app/assets/stylesheets directory
+- Add your sass:
+```
 
+* { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }
+.clr {clear:both;}
+
+/* Variables & Mixins */
+$bg: #123;  /* Changes Entire Color Scheme */
+$text: lighten($bg,35%);
+$link-text: lighten($bg,75%);
+
+a {
+  color: $link-text;
+}
+/* General Layout */
+body {
+  background: $bg; 
+  color:$text; 
+  font-family:Century Gothic;
+}
+
+
+```
 **NOTE**: I skipped testing. Have a look at [this commit](https://github.com/paulsturgess/todos-5.1.0/commit/979af2ac4a762bd3eb712a1dc6d602a811417c8d) to see how tests were implemented for all this React and Redux code.
 
 # TODO
