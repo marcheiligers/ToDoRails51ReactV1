@@ -40,7 +40,7 @@ In `config/environments/development.rb` add webpack dev server config:
 config.x.webpacker[:dev_server_host] = "http://localhost:8080"
 ```
 
-Add `gem 'forman'` to the `:development` group in the `Gemfile` and
+Add `gem 'foreman'` to the `:development` group in the `Gemfile` and
 
 ``` bash
 bundle
