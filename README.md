@@ -10,6 +10,14 @@
 ## Requirements
 
 - Ensure you have yarn > 0.20.0
+```
+brew update
+brew install yarn
+
+And add export PATH="$PATH:$HOME/.yarn/bin" to your profile (this may be in your .profile, .bashrc, .zshrc, etc.)
+
+yarn --version #check version to make sure installed and in path
+```
 
 ## Setup
 
