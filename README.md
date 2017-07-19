@@ -545,6 +545,13 @@ Add the package to the view.
 ``` erb
 <%= javascript_pack_tag 'todos' %>
 ```
+
+## Create a Model
+
+10271  rails g scaffold Tasks name:string status:string
+10272  rake db:create
+10273  rake db:migrate
+
 ## Add some style
 - Add your style file `style.scss` under the app/assets/stylesheets directory
 - Add your sass:
@@ -568,8 +575,8 @@ body {
   font-family:Century Gothic;
 }
 
-
 ```
+
 **NOTE**: I skipped testing. Have a look at [this commit](https://github.com/paulsturgess/todos-5.1.0/commit/979af2ac4a762bd3eb712a1dc6d602a811417c8d) to see how tests were implemented for all this React and Redux code.
 
 # TODO
