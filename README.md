@@ -3,8 +3,6 @@
 ## Demo
 
 - Setup Rails 5.1 with Redux
-- Extend API with new endpoint
-- Add new redux elements
 - Further readings
 
 ## Requirements
@@ -579,14 +577,8 @@ body {
 
 **NOTE**: I skipped testing. Have a look at [this commit](https://github.com/paulsturgess/todos-5.1.0/commit/979af2ac4a762bd3eb712a1dc6d602a811417c8d) to see how tests were implemented for all this React and Redux code.
 
-# TODO
-
-- [x] Finish initial app set up
-- [ ] Add a Todo model
-- [ ] Add a Todo controller
-- [ ] Update client to load and save data
-- [x] Add more links
-- [x] Figure out why there was no .babelrc or webpack scripts in bin/, or indeed react, react-dom, and so on
+# Follow-up:
+- Extend this to use a model and other endpoints
 
 # Useful Links:
 
